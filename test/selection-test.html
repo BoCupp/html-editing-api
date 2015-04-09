@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Selection Tests</title>
+	<script src="../selection-api.js"></script>
+	<script src="testharness.js"></script>
+	<script src="testharnessreport.js"></script>
+</head>
+<body>
+	<script>
+		test(function() {
+			var selection = HtmlEditingAPI.getSelection();
+			assert_true(selection != null);
+		}, "getSelection returns an object");
+
+		test(function() {
+			var selection = HtmlEditingAPI.getSelection();
+			var result = selection.removeAllRanges();
+			assert_equals(result, window.undefined, "result");
+			assert_equals(selection.anchorNode, null, "selection.anchorNode");
+			assert_equals(selection.anchorOffset, 0, "selection.anchorOffset");
+			assert_equals(selection.baseNode, null, "selection.baseNode");
+			assert_equals(selection.baseOffset, 0, "selection.baseOffset");
+			assert_equals(selection.extentNode, null, "selection.extentNode");
+			assert_equals(selection.extentOffset, 0, "selection.extentOffset");
+			assert_equals(selection.focusNode, null, "selection.focusNode");
+			assert_equals(selection.focusOffset, 0, "selection.focusOffset");
+		}, "removeAllRanges returns undefined and leaves node and offset values at null and 0");
+
+		test(function() {
+			var selection = HtmlEditingAPI.getSelection();
+			
+			var node = document.createTextNode("test");
+			var offset = 3;
+
+			selection.anchorNode = node;
+			assert_equals(selection.anchorNode, null, "selection.anchorNode");
+			selection.anchorOffset = offset;
+			assert_equals(selection.anchorOffset, 0, "selection.anchorOffset");
+			
+			selection.baseNode = node;
+			assert_equals(selection.baseNode, null, "selection.baseNode");
+			selection.baseOffset = offset;
+			assert_equals(selection.baseOffset, 0, "selection.baseOffset");
+
+			selection.extentNode = node;
+			assert_equals(selection.extentNode, null, "selection.extentNode");
+			selection.extentOffset = offset;
+			assert_equals(selection.extentOffset, 0, "selection.extentOffset");
+
+			selection.focusNode = node;
+			assert_equals(selection.focusNode, null, "selection.focusNode");
+			selection.focusOffset = offset;
+			assert_equals(selection.focusOffset, 0, "selection.focusOffset");
+
+		}, "selection node and offset properties are read-only");
+
+	</script>
+	<div id="log"></div>
+</body>
+</html>
